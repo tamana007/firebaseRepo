@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from './AuthContext';
 
 interface ProtectedRouteProps {
   children: JSX.Element;
 }
 
-function ProtectedRoute({ children }: ProtectedRouteProps) {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { currentUser } = useAuth();
 
   if (!currentUser) {
@@ -16,6 +16,6 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   return children;
-}
+};
 
 export default ProtectedRoute;

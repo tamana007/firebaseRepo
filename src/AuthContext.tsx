@@ -1,15 +1,21 @@
 // src/AuthContext.tsx
 
-import React, { useContext, useState, useEffect, ReactNode } from "react";
-import { auth } from "./firebaseConfig";
+import React, { useContext, useState, useEffect, ReactNode } from 'react';
+import { auth } from './firebaseConfig';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  TwitterAuthProvider,
+  GithubAuthProvider,
+  OAuthProvider,
   User,
   UserCredential,
-} from "firebase/auth";
+} from 'firebase/auth';
 
 // Define the shape of the authentication context
 interface AuthContextType {
@@ -17,6 +23,12 @@ interface AuthContextType {
   signup: (email: string, password: string) => Promise<UserCredential>;
   login: (email: string, password: string) => Promise<UserCredential>;
   logout: () => Promise<void>;
+  signInWithGoogle: () => Promise<UserCredential>;
+  signInWithFacebook: () => Promise<UserCredential>;
+  signInWithTwitter: () => Promise<UserCredential>;
+  signInWithGithub: () => Promise<UserCredential>;
+  signInWithMicrosoft: () => Promise<UserCredential>;
+  signInWithApple: () => Promise<UserCredential>;
 }
 
 // Create the context with an initial value of null
@@ -52,6 +64,37 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return signOut(auth);
   }
 
+  // Functions for social authentication
+  function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  }
+
+  function signInWithFacebook() {
+    const provider = new FacebookAuthProvider();
+    return signInWithPopup(auth, provider);
+  }
+
+  function signInWithTwitter() {
+    const provider = new TwitterAuthProvider();
+    return signInWithPopup(auth, provider);
+  }
+
+  function signInWithGithub() {
+    const provider = new GithubAuthProvider();
+    return signInWithPopup(auth, provider);
+  }
+
+  function signInWithMicrosoft() {
+    const provider = new OAuthProvider('microsoft.com');
+    return signInWithPopup(auth, provider);
+  }
+
+  function signInWithApple() {
+    const provider = new OAuthProvider('apple.com');
+    return signInWithPopup(auth, provider);
+  }
+
   // Set up an observer on the Auth object to get the current user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -69,6 +112,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     signup,
     login,
     logout,
+    signInWithGoogle,
+    signInWithFacebook,
+    signInWithTwitter,
+    signInWithGithub,
+    signInWithMicrosoft,
+    signInWithApple,
   };
 
   // Only render the children once the loading state is false

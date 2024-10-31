@@ -2,16 +2,12 @@
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Signup from './components/Signup';
-import Login from './components/Login';
 import Home from './components/Home';
-import ProtectedRoute from './components/ProtectedRoute';
-// import { Routes, Route } from 'react-router-dom';
-// import Home from './components/Home';
-// import Login from './components/Login';
-// import Signup from './components/Signup';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import ProtectedRoute from './ProtectedRoute';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Routes>
       <Route
@@ -22,10 +18,10 @@ function App() {
           </ProtectedRoute>
         }
       />
-      <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
     </Routes>
   );
-}
+};
 
 export default App;

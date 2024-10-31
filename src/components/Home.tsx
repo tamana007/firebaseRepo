@@ -3,6 +3,7 @@
 import React from 'react';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Button, Typography, Container } from '@mui/material';
 
 const Home: React.FC = () => {
   const { currentUser, logout } = useAuth();
@@ -18,10 +19,14 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Welcome, {currentUser?.email}</h2>
-      <button onClick={handleLogout}>Log Out</button>
-    </div>
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h1" gutterBottom>
+        Welcome, {currentUser?.email}
+      </Typography>
+      <Button variant="contained" color="primary" onClick={handleLogout}>
+        Log Out
+      </Button>
+    </Container>
   );
 };
 
